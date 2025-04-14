@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .main-content {
+            margin: 0 auto;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 12px;
+            height: 2px;
+            background-color: red;
+            margin-left: 2px;
+            margin-bottom: 3px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .subtitle {
+            color: #888;
+            margin-bottom: 50px;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            text-transform: uppercase;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .project {
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .project-details {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+        }
+
+        .contact-label {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 14px;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        a:after {
+            content: " ↗";
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>Home:<br>Bangalore, India</div>
+        <div>Time:<br><span id="time"></span></div>
+    </header>
+
+    <div class="main-content">
+        <h1>
+            HARSHAVARDHANA NAGANAGOUDAR
+            <span class="cursor"></span>
+        </h1>
+        <div class="subtitle">AI/ML Engineer</div>
+
+        <div class="section">
+            <div class="section-title">About</div>
+            <p>
+                Hi! I'm an AI/ML engineer who pivoted from software testing to teaching machines how to think. I work with Python, PyTorch, and TensorFlow — focusing on LLM, deep learning, and AI agents. I build clever systems that learn, adapt, and solve real-world problems. I’m always up for a new challenge in AI.
+            </p>
+<p style="color: #444; font-style: italic;">
+    Half engineer, half experimenter. Full-time machine whisperer.
+</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Now</div>
+            <p>
+                Currently deepening my expertise in Deep Learning, LLMs, NLP and AI agents. Building hands-on projects and preparing to break into the AI/ML industry.
+            </p>
+        </div>
+
+	<div class="section">
+    <div class="section-title">Skills</div>
+    <p>Languages: Python, SQL | AI: TensorFlow, PyTorch, LangGraph, LlamaIndex | Libraries and Tools: NumPy, Pandas, Git, AWS</p>
+</div>
+
+        <div class="section">
+            <div class="section-title">Projects</div>
+            
+            <div class="project">
+                <div class="project-title">
+                    <a href="https://huggingface.co/spaces/nharshavardhana/PackPal">PackPal</a>
+                </div>
+                <div class="project-details">AI Agent - AI Powered Travel Packing Assistant • 2025</div>
+            </div>
+
+            <div class="project">
+                <div class="project-title">
+                    <a href="https://huggingface.co/spaces/nharshavardhana/RAGResume">RAGResume</a>
+                </div>
+                <div class="project-details">AI Agent - Intelligent Resume Query Agent • 2025</div>
+            </div>
+
+            <div class="project">
+                <div class="project-title">
+                    <a href="https://huggingface.co/spaces/nharshavardhana/DoodleSense">DoodleSense</a>
+                </div>
+                <div class="project-details">Deep Learning Project - AI for Hand Drawn Images • 2024</div>
+            </div>
+        </div>
+
+	<div class="section">
+    <div class="section-title">Life Outside Code</div>
+    <p>
+        Run at dawn. Read past midnight. Anime in between.
+    </p>
+</div>
+
+        <div class="section">
+            <div class="section-title">Connect</div>
+            
+            <div class="contact-item">
+                <div class="contact-label">LinkedIn</div>
+                <div class="contact-value">
+                    <a href="https://www.linkedin.com/in/harshavardhana-naganagoudar-75901299/">harsha-naganagoudar</a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-label">GitHub</div>
+                <div class="contact-value">
+                    <a href="https://github.com/HarshavardhanaNaganagoudar">harsha-n</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    function updateTime() {
+        const now = new Date().toLocaleTimeString('en-US', {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+        document.getElementById('time').textContent = now;
+    }
+
+    updateTime(); // Set initial time
+    setInterval(updateTime, 1000); // Update every second
+</script></body>
+</html>
