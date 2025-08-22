@@ -3,215 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Website</title>
+    <title>Harshavardhana Naganagoudar</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            color: #000;
-            line-height: 1.5;
-            padding: 20px;
+            box-sizing: border-box;
         }
 
-        header {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #111;
+            line-height: 1.6;
+            background: #fafafa;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header with status */
+        .header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 60px;
-            font-size: 14px;
-            color: #888;
+            align-items: center;
+            margin-bottom: 80px;
+            font-size: 13px;
+            color: #666;
         }
 
-        .main-content {
-            margin: 0 auto;
-            max-width: 500px;
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+        .location {
             display: flex;
-            align-items: flex-end;
+            align-items: center;
+            gap: 8px;
         }
 
-        .cursor {
+        .location::before {
+            content: "🌍";
+            font-size: 12px;
+        }
+
+        .time-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main heading with gradient */
+        .hero {
+            margin-bottom: 80px;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #111 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .typing-cursor {
             display: inline-block;
-            width: 12px;
-            height: 2px;
-            background-color: red;
+            width: 2px;
+            height: 28px;
+            background-color: #111;
             margin-left: 2px;
-            margin-bottom: 3px;
             animation: blink 1s step-end infinite;
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
-        .subtitle {
-            color: #888;
-            margin-bottom: 50px;
-            font-size: 14px;
-        }
-
-        .section {
+        .role {
+            color: #666;
+            font-size: 15px;
+            font-weight: 300;
             margin-bottom: 40px;
         }
 
+        .tagline {
+            color: #888;
+            font-style: italic;
+            font-size: 14px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+        .section:nth-child(5) { animation-delay: 0.4s; }
+        .section:nth-child(6) { animation-delay: 0.5s; }
+        .section:nth-child(7) { animation-delay: 0.6s; }
+        .section:nth-child(8) { animation-delay: 0.7s; }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .section-title {
+            font-size: 12px;
             text-transform: uppercase;
+            letter-spacing: 1px;
             color: #aaa;
-            font-size: 14px;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
-        p {
-            margin-bottom: 15px;
-            font-size: 14px;
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 20px;
+            height: 1px;
+            background: #ddd;
         }
 
+        .content {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        /* Now section with visual indicator */
+        .now-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .now-indicator {
+            width: 6px;
+            height: 6px;
+            background: #3b82f6;
+            border-radius: 50%;
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Skills with hover effects */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-category {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateX(4px);
+            border-bottom-color: #ddd;
+        }
+
+        .skill-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .skill-items {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Projects with better spacing */
         .project {
-            margin-bottom: 15px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .project:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .project:hover {
+            transform: translateX(2px);
         }
 
         .project-title {
-            font-size: 14px;
-            margin-bottom: 5px;
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: #111;
         }
 
         .project-details {
-            color: #888;
-            font-size: 14px;
+            font-size: 13px;
+            color: #666;
         }
 
-        .contact-item {
-            margin-bottom: 15px;
-        }
-
-        .contact-label {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .contact-value {
-            font-size: 14px;
-        }
-
+        /* Links with better styling */
         a {
-            color: #000;
+            color: inherit;
             text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        a:after {
-            content: " ↗";
-            font-size: 12px;
+        a::after {
+            content: "↗";
+            font-size: 11px;
+            color: #999;
+            margin-left: 4px;
+            transition: all 0.3s ease;
+        }
+
+        a:hover::after {
+            color: #111;
+            transform: translate(2px, -2px);
+        }
+
+        /* Connect section - horizontal minimal */
+        .connect-links {
+            display: flex;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        .connect-links a {
+            color: #444;
+            transition: all 0.3s ease;
+        }
+
+        .connect-links a:hover {
+            color: #111;
+            transform: translateX(2px);
+        }
+
+        /* Stats section - FIXED ALIGNMENT */
+        .stats {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .stat {
+            opacity: 0;
+            animation: countUp 0.8s ease forwards;
+        }
+
+        .stat:nth-child(1) { animation-delay: 0.2s; }
+        .stat:nth-child(2) { animation-delay: 0.4s; }
+        .stat:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes countUp {
+            to { opacity: 1; }
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 300;
+            color: #111;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        /* Reading section with book icon */
+        .reading-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .reading-content::before {
+            content: "📖";
+            font-size: 16px;
+        }
+
+        /* Availability indicator */
+        .availability {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .availability::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 15px;
+            }
+            
+            .name {
+                font-size: 24px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Subtle background animation */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(600px circle at 50% 50%, rgba(120, 119, 198, 0.05), transparent);
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundShift {
+            0% { transform: translateX(-10px) translateY(-10px); }
+            100% { transform: translateX(10px) translateY(10px); }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div>Home:<br>Bangalore, India</div>
-        <div>Time:<br><span id="time"></span></div>
-    </header>
+    <div class="container">
+        <header class="header">
+            <div class="location">Bangalore, India</div>
+            <div class="time-section">
+                <div class="status-indicator"></div>
+                <span id="time"></span>
+            </div>
+        </header>
 
-    <div class="main-content">
-        <h1>
-            HARSHAVARDHANA NAGANAGOUDAR
-            <span class="cursor"></span>
-        </h1>
-        <div class="subtitle">AI/ML Engineer</div>
-
-        <div class="section">
-            <div class="section-title">About</div>
-            <p>
-                Hi! I'm an AI/ML engineer who pivoted from software testing to teaching machines how to think. I work with Python, PyTorch, and TensorFlow — focusing on LLM, deep learning, and AI agents. I build clever systems that learn, adapt, and solve real-world problems. I’m always up for a new challenge in AI.
-            </p>
-<p style="color: #444; font-style: italic;">
-    Half engineer, half experimenter. Full-time machine whisperer.
-</p>
+        <div class="hero">
+            <h1 class="name">
+                <span id="typed-name"></span>
+                <span class="typing-cursor"></span>
+            </h1>
+            <div class="role">AI/ML Engineer</div>
+            <div class="tagline">Between code and curiosity.</div>
         </div>
 
         <div class="section">
-            <div class="section-title">Now</div>
-            <p>
-                Currently deepening my expertise in Deep Learning, LLMs, NLP and AI agents. Building hands-on projects and preparing to break into the AI/ML industry.
-            </p>
-        </div>
-
-	<div class="section">
-    <div class="section-title">Skills</div>
-    <p>Languages: Python, SQL | AI: TensorFlow, PyTorch, LangGraph, LlamaIndex | Libraries and Tools: NumPy, Pandas, Git, AWS</p>
-</div>
-
-        <div class="section">
-            <div class="section-title">Projects</div>
-            
-            <div class="project">
-                <div class="project-title">
-                    <a href="https://huggingface.co/spaces/nharshavardhana/PackPal">PackPal</a>
-                </div>
-                <div class="project-details">AI Agent - AI Powered Travel Packing Assistant • 2025</div>
-            </div>
-
-            <div class="project">
-                <div class="project-title">
-                    <a href="https://huggingface.co/spaces/nharshavardhana/RAGResume">RAGResume</a>
-                </div>
-                <div class="project-details">AI Agent - Intelligent Resume Query Agent • 2025</div>
-            </div>
-
-            <div class="project">
-                <div class="project-title">
-                    <a href="https://huggingface.co/spaces/nharshavardhana/DoodleSense">DoodleSense</a>
-                </div>
-                <div class="project-details">Deep Learning Project - AI for Hand Drawn Images • 2024</div>
+            <h2 class="section-title">About</h2>
+            <div class="content">
+                Pivoted from finding bugs in software to teaching machines to solve human problems. I build AI systems that learn, adapt, and solve real problems.
             </div>
         </div>
 
-	<div class="section">
-    <div class="section-title">Life Outside Code</div>
-    <p>
-        Run at dawn. Read past midnight. Anime in between.
-    </p>
-</div>
+        <div class="section">
+            <h2 class="section-title">Work</h2>
+            <div class="content">
+                IBM · 2015 - 2020
+            </div>
+        </div>
 
         <div class="section">
-            <div class="section-title">Connect</div>
-            
-            <div class="contact-item">
-                <div class="contact-label">LinkedIn</div>
-                <div class="contact-value">
-                    <a href="https://www.linkedin.com/in/harshavardhana-naganagoudar-75901299/">harsha-naganagoudar</a>
+            <h2 class="section-title">Now</h2>
+            <div class="now-content">
+                <div class="now-indicator"></div>
+                <div class="content">
+                    Exploring LLMs and AI agents through hands-on projects.
                 </div>
             </div>
+        </div>
 
-            <div class="contact-item">
-                <div class="contact-label">GitHub</div>
-                <div class="contact-value">
-                    <a href="https://github.com/HarshavardhanaNaganagoudar">harsha-n</a>
+        <div class="section">
+            <h2 class="section-title">Quick Stats</h2>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">AI/ML Projects</span>
                 </div>
+                <div class="stat">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">Work Experience (years)</span>
+                </div>
+		<div class="stat">
+                    <span class="stat-number">120+</span>
+                    <span class="stat-label">Books read</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-label">Languages</div>
+                    <div class="skill-items">Python, SQL</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-label">AI/ML</div>
+                    <div class="skill-items">LangGraph, LlamaIndex, PyTorch, TensorFlow</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-label">Libraries and Tools</div>
+                    <div class="skill-items">NumPy, Pandas, Git,  AWS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Selected Projects</h2>
+            <div class="project">
+                <div class="project-title">
+                    <a href="https://github.com/HarshavardhanaNaganagoudar/Shichi">Shichi</a>
+                </div>
+                <div class="project-details">AI-powered, Local-First Wellness Tracker</div>
+            </div>
+
+            <div class="project">
+                <div class="project-title">
+                    <a href="https://github.com/HarshavardhanaNaganagoudar/ADHD_Dyslexia_EasyScreen">ADHD-Dyslexia-EasyScreen</a>
+                </div>
+                <div class="project-details">AI-driven screening for ADHD and Dyslexia</div>
+            </div>
+
+            <div class="project">
+                <div class="project-title">
+                    <a href="https://github.com/HarshavardhanaNaganagoudar/MeetRecap_AI_Agent">MeetRecap</a>
+                </div>
+                <div class="project-details">An AI agent that transforms meeting recordings into concise summaries.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Currently Reading</h2>
+            <div class="reading-content">
+                <div class="content">
+                    <a href="https://www.goodreads.com/book/show/220817728-atmosphere">Atmosphere by Taylor Jenkins Reid</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Availability</h2>
+            <div class="availability">
+                Open to new opportunities
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Life Outside Code</h2>
+            <div class="content">
+                Mornings run, nights read, anime everywhere in between.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Connect</h2>
+            <div class="connect-links">
+                <a href="https://www.linkedin.com/in/harshavardhana-naganagoudar-75901299/">LinkedIn</a>
+                <a href="https://github.com/HarshavardhanaNaganagoudar">GitHub</a>
             </div>
         </div>
     </div>
-<script>
-    function updateTime() {
-        const now = new Date().toLocaleTimeString('en-US', {
-            timeZone: 'Asia/Kolkata',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        });
-        document.getElementById('time').textContent = now;
-    }
 
-    updateTime(); // Set initial time
-    setInterval(updateTime, 1000); // Update every second
-</script></body>
+    <script>
+        // Typing animation for name
+        const nameText = "Harshavardhana Naganagoudar";
+        const typedNameEl = document.getElementById("typed-name");
+        
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < nameText.length) {
+                typedNameEl.innerHTML += nameText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        // Start typing animation on page load
+        typeWriter();
+
+        function updateTime() {
+            const now = new Date().toLocaleTimeString('en-US', {
+                timeZone: 'Asia/Kolkata',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            document.getElementById('time').textContent = now;
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Add subtle parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            document.body.style.background = `radial-gradient(600px circle at ${mouseX * 100}% ${mouseY * 100}%, rgba(120, 119, 198, 0.08), #fafafa)`;
+        });
+    </script>
+</body>
 </html>
