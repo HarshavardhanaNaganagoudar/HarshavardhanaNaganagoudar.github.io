@@ -1,565 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harshavardhana Naganagoudar</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harshavardhana Naganagoudar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1a1a1a;
+      --muted: #666;
+      --accent: #1a1a1a;
+      --link: #1a1a1a;
+      --link-hover: #555;
+      --border: #ccc;
+      --section-indent: 1.5rem;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: #111;
-            line-height: 1.6;
-            background: #fafafa;
-            min-height: 100vh;
-            transition: all 0.3s ease;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .container {
-            max-width: 520px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.65;
+      background: var(--bg);
+      color: var(--fg);
+      padding: 2.5rem 1.5rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
 
-        /* Header with status */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 80px;
-            font-size: 13px;
-            color: #666;
-        }
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+    }
 
-        .location {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    header h1 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
 
-        .location::before {
-            content: "🌍";
-            font-size: 12px;
-        }
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 16px;
+      background: none;
+      border: none;
+      color: var(--fg);
+      transition: transform 0.3s;
+      padding: 0;
+    }
+    .theme-toggle:hover { transform: rotate(30deg); }
 
-        .time-section {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .subtitle {
+      font-size: 13px;
+      color: var(--fg);
+      margin-bottom: 1.8rem;
+    }
 
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
+    .subtitle a {
+      color: var(--link);
+      text-underline-offset: 3px;
+    }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 0.2rem;
+    }
 
-        /* Main heading with gradient */
-        .hero {
-            margin-bottom: 80px;
-        }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      user-select: none;
+      font-size: 13px;
+      color: var(--fg);
+      padding: 0.15rem 0;
+    }
 
-        .name {
-            font-size: 28px;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #111 0%, #666 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-        }
+    .section-header:hover { color: var(--link-hover); }
 
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 28px;
-            background-color: #111;
-            margin-left: 2px;
-            animation: blink 1s step-end infinite;
-        }
+    .chevron {
+      font-size: 14px;
+      display: inline-block;
+      transition: transform 0.2s ease;
+      width: 14px;
+    }
 
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
+    .section-header.collapsed .chevron {
+      transform: rotate(-90deg);
+    }
 
-        .role {
-            color: #666;
-            font-size: 15px;
-            font-weight: 300;
-            margin-bottom: 40px;
-        }
+    .section-label {
+      font-weight: 500;
+    }
 
-        .tagline {
-            color: #888;
-            font-style: italic;
-            font-size: 14px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards;
-            animation-delay: 0.5s;
-        }
+    .section-body {
+      padding: 0.6rem 0 0.6rem var(--section-indent);
+      overflow: hidden;
+      transition: max-height 0.25s ease, opacity 0.2s ease;
+      max-height: 2000px;
+      opacity: 1;
+    }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
+    .section-body.collapsed {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
 
-        /* Sections */
-        .section {
-            margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideUp 0.6s ease forwards;
-        }
+    .section-body p {
+      margin-bottom: 0.75rem;
+      font-size: 13px;
+      color: var(--fg);
+    }
 
-        .section:nth-child(2) { animation-delay: 0.1s; }
-        .section:nth-child(3) { animation-delay: 0.2s; }
-        .section:nth-child(4) { animation-delay: 0.3s; }
-        .section:nth-child(5) { animation-delay: 0.4s; }
-        .section:nth-child(6) { animation-delay: 0.5s; }
-        .section:nth-child(7) { animation-delay: 0.6s; }
-        .section:nth-child(8) { animation-delay: 0.7s; }
+    .section-body p:last-child { margin-bottom: 0; }
 
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    /* ── Links ── */
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--fg);
+      text-decoration-thickness: 2px;
+      transition: text-decoration-color 0.15s;
+    }
+    a:hover { text-decoration-color: var(--link-hover); }
 
-        .section-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #aaa;
-            margin-bottom: 20px;
-            position: relative;
-        }
+    /* ── Projects list ── */
+    .project-item {
+      margin-bottom: 1rem;
+    }
+    .project-item:last-child { margin-bottom: 0; }
 
-        .section-title::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            width: 20px;
-            height: 1px;
-            background: #ddd;
-        }
+    .project-title {
+      font-weight: 600;
+      font-size: 13px;
+    }
 
-        .content {
-            font-size: 15px;
-            color: #444;
-            line-height: 1.7;
-        }
+    .project-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
 
-        /* Now section with visual indicator */
-        .now-content {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
+    .project-desc {
+      font-size: 13px;
+    }
 
-        .now-indicator {
-            width: 6px;
-            height: 6px;
-            background: #3b82f6;
-            border-radius: 50%;
-            margin-top: 10px;
-            flex-shrink: 0;
-        }
+    /* ── Skills tags ── */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.2rem;
+      font-size: 12px;
+    }
 
-        /* Skills with hover effects */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-        }
+    .skill-group {
+      margin-bottom: 0.5rem;
+    }
 
-        .skill-category {
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-            transition: all 0.3s ease;
-        }
+    .skill-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.2rem;
+    }
 
-        .skill-category:hover {
-            transform: translateX(4px);
-            border-bottom-color: #ddd;
-        }
+    /* ── Certs list ── */
+    .cert-item {
+      font-size: 13px;
+      margin-bottom: 0.3rem;
+    }
 
-        .skill-label {
-            font-size: 12px;
-            color: #999;
-            margin-bottom: 4px;
-        }
+    /* ── Contact links ── */
+    .contact-links {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
 
-        .skill-items {
-            font-size: 14px;
-            color: #555;
-        }
+    /* ── Footer social row ── */
+    .footer-links {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1.2rem;
+      font-size: 13px;
+    }
 
-        /* Projects with better spacing */
-        .project {
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: all 0.3s ease;
-        }
-
-        .project:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .project:hover {
-            transform: translateX(2px);
-        }
-
-        .project-title {
-            font-size: 15px;
-            margin-bottom: 6px;
-            color: #111;
-        }
-
-        .project-details {
-            font-size: 13px;
-            color: #666;
-        }
-
-        /* Links with better styling */
-        a {
-            color: inherit;
-            text-decoration: none;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        a::after {
-            content: "↗";
-            font-size: 11px;
-            color: #999;
-            margin-left: 4px;
-            transition: all 0.3s ease;
-        }
-
-        a:hover::after {
-            color: #111;
-            transform: translate(2px, -2px);
-        }
-
-        /* Connect section - horizontal minimal */
-        .connect-links {
-            display: flex;
-            gap: 30px;
-            font-size: 15px;
-        }
-
-        .connect-links a {
-            color: #444;
-            transition: all 0.3s ease;
-        }
-
-        .connect-links a:hover {
-            color: #111;
-            transform: translateX(2px);
-        }
-
-        /* Stats section - FIXED ALIGNMENT */
-        .stats {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap: 40px;
-        }
-
-        .stat {
-            opacity: 0;
-            animation: countUp 0.8s ease forwards;
-        }
-
-        .stat:nth-child(1) { animation-delay: 0.2s; }
-        .stat:nth-child(2) { animation-delay: 0.4s; }
-        .stat:nth-child(3) { animation-delay: 0.6s; }
-
-        @keyframes countUp {
-            to { opacity: 1; }
-        }
-
-        .stat-number {
-            font-size: 24px;
-            font-weight: 300;
-            color: #111;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1.3;
-        }
-
-        /* Reading section with book icon */
-        .reading-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .reading-content::before {
-            content: "📖";
-            font-size: 16px;
-        }
-
-        /* Availability indicator */
-        .availability {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #22c55e;
-            background: rgba(34, 197, 94, 0.1);
-            padding: 8px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-        }
-
-        .availability::before {
-            content: "";
-            width: 6px;
-            height: 6px;
-            background: #22c55e;
-            border-radius: 50%;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px 15px;
-            }
-            
-            .name {
-                font-size: 24px;
-            }
-            
-            .stats {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Subtle background animation */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(600px circle at 50% 50%, rgba(120, 119, 198, 0.05), transparent);
-            pointer-events: none;
-            z-index: -1;
-            animation: backgroundShift 20s ease-in-out infinite alternate;
-        }
-
-        @keyframes backgroundShift {
-            0% { transform: translateX(-10px) translateY(-10px); }
-            100% { transform: translateX(10px) translateY(10px); }
-        }
-    </style>
+    /* ── Dark mode ── */
+    body.dark {
+      --bg: #141414;
+      --fg: #e8e8e0;
+      --muted: #888;
+      --link: #e8e8e0;
+      --link-hover: #bbb;
+      --border: #444;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="location">Bangalore, India</div>
-            <div class="time-section">
-                <div class="status-indicator"></div>
-                <span id="time"></span>
-            </div>
-        </header>
 
-        <div class="hero">
-            <h1 class="name">
-                <span id="typed-name"></span>
-                <span class="typing-cursor"></span>
-            </h1>
-            <div class="role">AI/ML Engineer</div>
-            <div class="tagline">Between code and curiosity.</div>
-        </div>
+  <header>
+    <h1>Harshavardhana Naganagoudar</h1>
+    <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">☼</button>
+  </header>
 
-        <div class="section">
-            <h2 class="section-title">About</h2>
-            <div class="content">
-                Pivoted from finding bugs in software to teaching machines to solve human problems. I build AI systems that learn, adapt, and solve real problems.
-            </div>
-        </div>
+  <p class="subtitle">
+    AI/ML Engineer &nbsp;·&nbsp; Bengaluru, India
+  </p>
 
-        <div class="section">
-            <h2 class="section-title">Work</h2>
-            <div class="content">
-                IBM · 2015 - 2020
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Now</h2>
-            <div class="now-content">
-                <div class="now-indicator"></div>
-                <div class="content">
-                    Building and exploring LLM-powered applications and AI agents through real projects.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Quick Stats</h2>
-            <div class="stats">
-                <div class="stat">
-                    <span class="stat-number">15+</span>
-                    <span class="stat-label">AI/ML Projects</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">6</span>
-                    <span class="stat-label">Work Experience (years)</span>
-                </div>
-		<div class="stat">
-                    <span class="stat-number">130+</span>
-                    <span class="stat-label">Books read</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-label">Programming</div>
-                    <div class="skill-items">Python, SQL</div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-label">Agents & LLM Frameworks</div>
-                    <div class="skill-items">LangChain, LangGraph, LlamaIndex, MCP</div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-label">Tools and Cloud</div>
-                    <div class="skill-items">NumPy, Pandas, Git, AWS, HuggingFace</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Selected Projects</h2>
-            <div class="project">
-                <div class="project-title">
-                    <a href="https://github.com/HarshavardhanaNaganagoudar/Business-Location-Scouter">Business-Location-Scouter</a>
-                </div>
-                <div class="project-details">MCP server that identifies and ranks the best locations to open a business</div>
-            </div>
-
-            <div class="project">
-                <div class="project-title">
-                    <a href="https://github.com/HarshavardhanaNaganagoudar/One-Day-Odyssey">One-Day-Odyssey</a>
-                </div>
-                <div class="project-details">Multi agent day trip planner</div>
-            </div>
-
-            <div class="project">
-                <div class="project-title">
-                    <a href="https://github.com/HarshavardhanaNaganagoudar/Memoria">Memoria</a>
-                </div>
-                <div class="project-details">An AI Companion for Alzheimer’s</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Currently Reading</h2>
-            <div class="reading-content">
-                <div class="content">
-                    <a href="https://www.goodreads.com/book/show/233717140-good-people">Good People by Patmeena Sabit</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Availability</h2>
-            <div class="availability">
-                Open to new opportunities
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Life Outside Code</h2>
-            <div class="content">
-                Mornings run, nights read, anime everywhere in between.
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Connect</h2>
-            <div class="connect-links">
-                <a href="https://www.linkedin.com/in/harshavardhana-naganagoudar-75901299/">LinkedIn</a>
-                <a href="https://github.com/HarshavardhanaNaganagoudar">GitHub</a>
-            </div>
-        </div>
+  <!-- About -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="chevron">▾</span>
+      <span class="section-label">[About]</span>
     </div>
+    <div class="section-body">
+      <p>
+        I'm an AI/ML engineer exploring reasoning models, autonomous agents, and generative systems. I enjoy building practical AI products across reinforcement learning, LLM workflows, and multimodal applications. After six years in software testing and automation, I transitioned into AI/ML to work on systems that combine intelligence, creativity, and real-world usability.
+      </p>
+    </div>
+  </div>
 
-    <script>
-        // Typing animation for name
-        const nameText = "Harshavardhana Naganagoudar";
-        const typedNameEl = document.getElementById("typed-name");
-        
-        let i = 0;
-        
-        function typeWriter() {
-            if (i < nameText.length) {
-                typedNameEl.innerHTML += nameText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        }
-        
-        // Start typing animation on page load
-        typeWriter();
+  <!-- Projects -->
+  <div class="section">
+    <div class="section-header collapsed" onclick="toggle(this)">
+      <span class="chevron">▾</span>
+      <span class="section-label">[Projects]</span>
+    </div>
+    <div class="section-body collapsed">
+      <div class="project-item">
+        <div class="project-title">Influo — AI-driven promotional video creation</div>
+        <div class="project-desc">
+          Generates influencer-style short-form videos from product images using multimodal AI pipelines.
+          Integrates React, FastAPI, and Ollama for end-to-end automated video generation.
+          <a href="https://github.com/HarshavardhanaNaganagoudar/Influo">GitHub</a>
+        </div>
+      </div>
 
-        function updateTime() {
-            const now = new Date().toLocaleTimeString('en-US', {
-                timeZone: 'Asia/Kolkata',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            });
-            document.getElementById('time').textContent = now;
-        }
+      <div class="project-item">
+        <div class="project-title">Qwen2.5-3B GRPO — RL-based mathematical reasoning</div>
+        <div class="project-desc">
+          Fine-tuned Qwen2.5-3B with LoRA + GRPO for arithmetic reasoning. Used custom reward shaping
+          for structured equation generation, trained on Countdown arithmetic tasks.
+          <a href="https://github.com/HarshavardhanaNaganagoudar/Fine-tune-Qwen2.5-3B-Instruct-using-reinforcement-learning-train-with-GRPO">GitHub</a>
+        </div>
+      </div>
 
-        updateTime();
-        setInterval(updateTime, 1000);
+      <div class="project-item">
+        <div class="project-title">Repo For Dummies — AI-powered repository onboarding</div>
+        <div class="project-desc">
+          Two-agent architecture: a GitHub retrieval agent + an instruction-generation agent that
+          simplifies onboarding for any open-source repository automatically.
+          <a href="https://github.com/HarshavardhanaNaganagoudar/Repo-For-Dummies">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Add subtle parallax effect
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            document.body.style.background = `radial-gradient(600px circle at ${mouseX * 100}% ${mouseY * 100}%, rgba(120, 119, 198, 0.08), #fafafa)`;
-        });
-    </script>
+  <!-- Previously -->
+  <div class="section">
+    <div class="section-header collapsed" onclick="toggle(this)">
+      <span class="chevron">▾</span>
+      <span class="section-label">[Previously]</span>
+    </div>
+    <div class="section-body collapsed">
+      <p>
+        I previously worked at IBM as a Test Specialist, focusing on automation, backend testing, CI/CD pipelines, and release reliability for enterprise systems.
+      </p>
+    </div>
+  </div>
+
+  <!-- Interests -->
+  <div class="section">
+    <div class="section-header collapsed" onclick="toggle(this)">
+      <span class="chevron">▾</span>
+      <span class="section-label">[Interests]</span>
+    </div>
+    <div class="section-body collapsed">
+      <p>I enjoy running, <a href="https://www.goodreads.com/user/show/69407531-harshavardhana" target="_blank">reading</a>, anime, and puzzle games — anything that rewards curiosity and patience. A lot of my learning comes from exploring ideas online, especially listening to <a href="https://karpathy.ai/" target="_blank">Andrej Karpathy</a> somehow make neural networks feel surprisingly intuitive.</p>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer social links -->
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/harshavardhana-naganagoudar-75901299/">LinkedIn</a>
+    <a href="https://github.com/HarshavardhanaNaganagoudar">GitHub</a>
+    <a href="https://www.youtube.com/@harshavardhananaganagoudar2483">Youtube</a>
+  </div>
+
+  <script>
+    function toggle(header) {
+      header.classList.toggle('collapsed');
+      const body = header.nextElementSibling;
+      body.classList.toggle('collapsed');
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const btn = document.querySelector('.theme-toggle');
+      btn.textContent = document.body.classList.contains('dark') ? '☽' : '☼';
+    }
+  </script>
 </body>
 </html>
